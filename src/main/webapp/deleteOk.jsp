@@ -5,17 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 가입 완료</title>
+<title>회원 탈퇴</title>
 </head>
 <body>
 	<%
 		request.setCharacterEncoding("utf-8");//한글깨짐 방지
 		
 		String mid = request.getParameter("userId");
-		String mpw = request.getParameter("userPw");
-		String memail = request.getParameter("userEmail");
 		
-		String sql = "INSERT INTO members(id, passwd, email) VALUES ('"+ mid +"', '"+ mpw +"','"+ memail +"')";
+		
+		String sql = "DELETE FROM members WHERE id='" + mid + "'";
 	
 		//data source 설정
 		String driverName = "com.mysql.jdbc.Driver";
@@ -34,9 +33,10 @@
 			int resultCheck = stmt.executeUpdate(sql);//SQL실행->1이 반환되면 성공, 아니면 실패
 			
 			if(resultCheck == 1){
-				out.print("회원가입성공!");
+				//out.print("회원가입성공!");
+				response.sendRedirect("memberList.jsp");
 			}else{
-				out.print("회원가입실패!");
+				out.print("회원탈퇴실패!");
 			}
 			
 			
@@ -55,8 +55,5 @@
 			}
 		}
 	%>
-	
-	<br>
-	<a href="memberList.jsp">회원 리스트 보기</a>
 </body>
 </html>
